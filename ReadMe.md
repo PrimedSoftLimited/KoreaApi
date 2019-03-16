@@ -7,6 +7,7 @@ controllers are on `App\Http\Controllers`.
 - RegisterController (Creating new user)
 - Login controller (Login user via email and password)
 - UserController (show authenticated users profile)
+- GoalController (Perform operations on the goal such as get, post, put, delete)
 
 # Middleware
 

@@ -17,6 +17,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      *
      * @var array
      */
+    protected $primaryKey = 'uid';
+
     protected $fillable = [
         'username', 'email', 'phone', 'password', 'api_token',
     ];
@@ -29,4 +31,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password', 'api_token',
     ];
+
+    public function goals()
+    {
+        return $this->hasMany('App\Goal');
+    }
 }
