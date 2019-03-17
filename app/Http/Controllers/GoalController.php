@@ -24,7 +24,7 @@ class GoalController extends Controller
     {
         // $goals = Auth::user()->goal()->get();
         $goals = Goal::orderBy('created_at', 'desc')->get();
-        return response()->json(['status' => 'success','goal' => $goals]);
+        return response()->json(['success' => true,'goal' => $goals]);
     }
 
     public function store(Request $request)
@@ -45,15 +45,20 @@ class GoalController extends Controller
         {
 
         //return response()->json(['status' => 'success']);
-        return response()->json(['data' => ['goal' => $goal]], 201);
+        return response()->json(['success' => 'inserted successfully', 'data' => ['goal' => $goal]], 201);
     }
 }
 
     public function show($gid)
     {
-    $goal = Goal::where('gid',$gid)->get();
-    //return response()->json($goal);
-    return response()->json(['data' => ['goal' => $goal]], 201);
+        $user = Auth::user();
+        if ($user)
+        {
+        $goal = Goal::where('gid',$gid)->get();
+        // $goal = Goal::find($gid);
+        //return response()->json($goal);
+        return response()->json(['success' => true, 'data' => ['goal' => $goal]], 201);
+        }
     }
 
     public function edit($gid)
@@ -81,7 +86,7 @@ class GoalController extends Controller
             $goal->goalname = $request->input('goalname');
             $goal->goalbody = $request->input('goalbody');
             $goal->save();
-            return response()->json(['success' => true,'data' => ['goal' => $goal]], 201);
+            return response()->json(['success' => 'successfully updated','data' => ['goal' => $goal]], 201);
         }
 
     }
