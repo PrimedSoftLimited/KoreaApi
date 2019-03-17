@@ -25,7 +25,7 @@ class UserController extends Controller
 
         if ($user){
 
-        return response()->json(['data' => [ 'success' => true, 'username' => $user ]], 200);
+        return response()->json(['data' => ['success' => true, 'message' => 'Welcome to your profile', 'user' => $user ]], 200);
 
     }
     }

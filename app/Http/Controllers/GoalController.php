@@ -45,7 +45,7 @@ class GoalController extends Controller
         {
 
         //return response()->json(['status' => 'success']);
-        return response()->json(['success' => 'inserted successfully', 'data' => ['goal' => $goal]], 201);
+        return response()->json(['data' => ['success' => true, 'message' => 'inserted successfully', 'goal' => $goal]], 201);
     }
 }
 
@@ -67,7 +67,7 @@ class GoalController extends Controller
         if (Auth::user()->uid !== $goal->uid) {
             return response()->json(['success' => false], 403);
         } else {
-        return response()->json(['success' => true,'data' => ['goal' => $goal]], 201);
+        return response()->json(['data' => ['success' => true,'goal' => $goal]], 201);
         }
 
     }
@@ -86,7 +86,7 @@ class GoalController extends Controller
             $goal->goalname = $request->input('goalname');
             $goal->goalbody = $request->input('goalbody');
             $goal->save();
-            return response()->json(['success' => 'successfully updated','data' => ['goal' => $goal]], 201);
+            return response()->json(['data' => ['success' => true, 'message' => 'successfully updated','goal' => $goal]], 201);
         }
 
     }
@@ -95,9 +95,9 @@ class GoalController extends Controller
     {
         $goal = Goal::find($gid);
         if(Auth::user()->uid === $goal->uid && Goal::destroy($gid)){
-             return response()->json(['success' => 'deleted successfully'], 201);
+             return response()->json(['data' => ['success' => 'deleted successfully']], 201);
         }
-        return response()->json(['success' => 'failed'], 403);
+        return response()->json(['data' => ['success' => 'failed']], 403);
     }
 
 }

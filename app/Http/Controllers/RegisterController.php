@@ -44,7 +44,7 @@ class RegisterController extends Controller
 
         $user->save();
 
-        return response()->json(['data' => ['user' => $user, 'token' => 'Bearer ' . $token]], 201);
+        return response()->json(['data' => ['success' => true, 'message' => 'Successfully Registered', 'user' => $user, 'token' => 'Bearer ' . $token]], 201);
 
     }
 }

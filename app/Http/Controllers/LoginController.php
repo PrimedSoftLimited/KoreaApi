@@ -42,7 +42,7 @@ class LoginController extends Controller
 
         if (Hash::check($password, $user->password)) {
 
-            return response()->json(['data' => [ 'success' => true, 'user' => $user, 'token' => 'Bearer ' . $token]], 200);
+            return response()->json(['data' => ['success' => true, 'message' => 'login successful', 'user' => $user, 'token' => 'Bearer ' . $token]], 200);
 
         }
         return response()->json(['error' => true, 'message' => "Invalid Credentials"], 401);
