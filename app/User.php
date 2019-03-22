@@ -32,7 +32,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password', 'api_token',
     ];
 
-    public function goals()
+    public function goal()
     {
         return $this->hasMany('App\Goal');
     }

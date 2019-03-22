@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Goal;
+use Mockery\CountValidator\Exception;
 
 class GoalController extends Controller
 {
@@ -22,9 +24,9 @@ class GoalController extends Controller
 
     public function index()
     {
-        // $goals = Auth::user()->goal()->get();
-        $goals = Goal::orderBy('created_at', 'desc')->get();
-        return response()->json(['success' => true,'goal' => $goals]);
+        $user = Auth::user();
+        $goals = Goal::where('uid', $user->uid)->get();
+        return response()->json(['data' => ['success' => true, 'goals' => $goals]], 201);
     }
 
     public function store(Request $request)
@@ -52,23 +54,30 @@ class GoalController extends Controller
     public function show($gid)
     {
         $user = Auth::user();
-        if ($user)
-        {
-        $goal = Goal::where('gid',$gid)->get();
-        // $goal = Goal::find($gid);
-        //return response()->json($goal);
-        return response()->json(['success' => true, 'data' => ['goal' => $goal]], 201);
+        // if ($user)
+        // {
+        // $goal = Goal::where('uid', $user->uid)->where('gid', $gid)->get();
+        // $goal = Goal::findOrFail($gid);
+        $goal = Goal::find($gid);
+        if (Auth::user()->uid !== $goal->uid) {
+            return response()->json(['Message' => "Unauthorized"], 403);
+        } else {
+        return response()->json(['data' => ['success' => true, 'goal' => $goal]], 201);
         }
     }
 
     public function edit($gid)
     {
         $goal = Goal::find($gid);
+        try {
         if (Auth::user()->uid !== $goal->uid) {
             return response()->json(['success' => false], 403);
         } else {
         return response()->json(['data' => ['success' => true,'goal' => $goal]], 201);
         }
+    } catch (\Exception $e){
+        return response()->json(['success' => false], 403);
+    }
 
     }
 
@@ -80,6 +89,7 @@ class GoalController extends Controller
         ]);
 
         $goal = Goal::find($gid);
+        try {
         if (Auth::user()->uid !== $goal->uid) {
             return response()->json(['success' => false], 403);
         } else {
@@ -88,6 +98,9 @@ class GoalController extends Controller
             $goal->save();
             return response()->json(['data' => ['success' => true, 'message' => 'successfully updated','goal' => $goal]], 201);
         }
+    } catch(\Exception $e) {
+        return response()->json(['error' => true, 'message' => 'request failed'], 409);
+    }
 
     }
 

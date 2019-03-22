@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             ->nullable()
             ->default(null);
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 
