@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Goal;
+use App\Task;
 use Mockery\CountValidator\Exception;
 
 class GoalController extends Controller
@@ -106,11 +107,17 @@ class GoalController extends Controller
 
     public function destroy($gid)
     {
+        try {
         $goal = Goal::find($gid);
-        if(Auth::user()->uid === $goal->uid && Goal::destroy($gid)){
+        //$task = Task::where('gid', $goal->gid)->get();
+        if(Auth::user()->uid === $goal->uid){
+            DB::table('tasks')->where('gid', '=', $goal->gid)->delete();
+            Goal::destroy($gid);
              return response()->json(['data' => ['success' => 'deleted successfully']], 201);
         }
-        return response()->json(['data' => ['success' => 'failed']], 403);
+    } catch (\Exception $e) {
+        return response()->json(['data' => ['message' => 'unable to delete']], 403);
+    }
     }
 
 }

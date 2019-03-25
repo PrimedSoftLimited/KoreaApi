@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             ->default(null);
             $table->timestamps();
 
-            $table->engine = 'InnoDB';
+            // $table->engine = 'InnoDB';
         });
     }
 

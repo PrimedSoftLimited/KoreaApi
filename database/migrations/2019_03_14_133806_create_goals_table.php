@@ -20,9 +20,9 @@ class CreateGoalsTable extends Migration
             $table->integer('uid')->unsigned();
             $table->timestamps();
 
-            Schema::enableForeignKeyConstraints();
-            $table->foreign('uid')->references('uid')->on('users');
-            $table->engine = 'InnoDB';
+            //Schema::enableForeignKeyConstraints();
+            // $table->foreign('uid')->references('uid')->on('users')->onDelete('cascade');
+            // $table->engine = 'InnoDB';
         });
     }
 

@@ -21,9 +21,9 @@ class CreateTasksTable extends Migration
             $table->timestamps();
 
 
-            $table->foreign('gid')->references('gid')->on('goals');
-            Schema::enableForeignKeyConstraints();
-            $table->engine = 'InnoDB';
+            // $table->foreign('gid')->references('gid')->on('goals');
+            //Schema::enableForeignKeyConstraints();
+            // $table->engine = 'InnoDB';
         });
     }
 
