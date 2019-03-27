@@ -42,6 +42,8 @@ class GoalController extends Controller
     $goal->goalname = $request->input('goalname');
     $goal->goalbody = $request->input('goalbody');
     $goal->uid = Auth::user()->uid;
+    $goal->start = $request->input('start');
+    $goal->end = $request->input('end');
     $checkgoal = $goal->save();
     //Auth::user()->goal()->Create($request->all())
         if($checkgoal)

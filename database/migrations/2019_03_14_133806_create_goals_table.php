@@ -18,6 +18,8 @@ class CreateGoalsTable extends Migration
             $table->string('goalname');
             $table->mediumText('goalbody');
             $table->integer('uid')->unsigned();
+            $table->string('start');
+            $table->string('end');
             $table->timestamps();
 
             //Schema::enableForeignKeyConstraints();
